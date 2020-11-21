@@ -30,6 +30,7 @@ stages:
           Write-Host "Package Version: $(package.version)"
           Write-Host "isReleaseBuild? $(isReleaseBuild)"
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
+          Write-Host "build targets: $(unity.build.targets)"
           $logDirectory = '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Logs'
           New-Item -ItemType Directory -Force -Path $logDirectory
           echo "##vso[task.setvariable variable=LogDirectory]$logDirectory"
