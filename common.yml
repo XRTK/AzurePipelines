@@ -5,12 +5,23 @@ parameters:
       windows:
         pool: self-hosted-windows
         modules: '"windows-il2cpp", "universal-windows-platform", "lumin", "webgl", "android"'
+        validTargets:
+          - StandaloneWindows64
+          - WSAPlayer
+          - Android
+          - Lumin
+          - WebGL
       macOS:
         pool: self-hosted-mac
         modules: '"mac-il2cpp", "ios", "webgl", "lumin", "android"'
+        validTargets:
+        - StandaloneOSX
+        - iOS
       linux:
         pool: self-hosted-linux
         modules: '"linux"'
+        validTargets:
+        - StandaloneLinux64
   - name: targets
     type: object
 
