@@ -45,7 +45,7 @@ stages:
 
       - ${{ each target in parameters.targets }}:
         - ${{ each validTarget in parameters.validTargets }}:
-          - ${{ if eq('target', 'validTarget') }}:
+          - ${{ if eq(target, validTarget) }}:
             - template: steps/run-unity-tests.yml
               parameters:
                 target: ${{ target }}
