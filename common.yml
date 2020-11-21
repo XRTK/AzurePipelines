@@ -1,4 +1,8 @@
 parameters:
+  - name: targets
+    type: object
+    # Unity -buildTarget command line args https://docs.unity3d.com/Manual/CommandLineArguments.html
+    # Standalone, Win, Win64, OSXUniversal, Linux64, iOS, Android, WebGL, XboxOne, PS4, WindowsStoreApps, Switch, tvOS, Lumin
   - name: os
     type: object
     default:
@@ -6,8 +10,8 @@ parameters:
         pool: self-hosted-windows
         modules: '"windows-il2cpp", "universal-windows-platform", "lumin", "webgl", "android"'
         validTargets:
-          - StandaloneWindows64
-          - WSAPlayer
+          - StandaloneWindows64 #Win64
+          - WSAPlayer #WindowsStoreApps
           - Android
           - Lumin
           - WebGL
@@ -15,15 +19,19 @@ parameters:
         pool: self-hosted-mac
         modules: '"mac-il2cpp", "ios", "webgl", "lumin", "android"'
         validTargets:
-        - StandaloneOSX
+        - StandaloneOSX #OSXUniversal
         - iOS
+        - Android
+        - Lumin
+        - WebGL
       linux:
         pool: self-hosted-linux
-        modules: '"linux"'
+        modules: '"linux", "webgl", "lumin", "android"'
         validTargets:
-        - StandaloneLinux64
-  - name: targets
-    type: object
+        - StandaloneLinux64 #Linux64
+        - Android
+        - Lumin
+        - WebGL
 
 stages:
   - template: stages/unity-build.yml
