@@ -1,0 +1,20 @@
+parameters:
+  - name: os
+    type: object
+    default:
+      windows:
+        pool: self-hosted-windows
+        modules: '"windows-il2cpp", "universal-windows-platform", "lumin", "webgl", "android"'
+      macOS:
+        pool: self-hosted-mac
+        modules: '"mac-il2cpp", "ios", "webgl", "lumin", "android"'
+      linux:
+        pool: self-hosted-linux
+        modules: '"linux"'
+
+stages:
+  - template: stages/unity-build.yml
+    parameters:
+      platform: windows
+      ${{ insert }}: ${{ parameters.os.windows }}
+  - template: stages/publish.yml
