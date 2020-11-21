@@ -30,7 +30,7 @@ stages:
           Write-Host "Package Version: $(package.version)"
           Write-Host "isReleaseBuild? $(isReleaseBuild)"
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
-          Write-Host "build targets: $(unity.build.targets)"
+          Write-Host "build targets: $(parameters.targets)"
           $logDirectory = '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Logs'
           New-Item -ItemType Directory -Force -Path $logDirectory
           echo "##vso[task.setvariable variable=LogDirectory]$logDirectory"
@@ -44,7 +44,7 @@ stages:
 
       - template: steps/validate-project.yml
 
-      - ${{ each item in variables['unity.build.targets'] }}:
+      - ${{ each item in parameters.targets }}:
         - template: steps/run-unity-tests.yml
           parameters:
             target: ${{ item }}

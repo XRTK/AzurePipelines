@@ -11,10 +11,13 @@ parameters:
       linux:
         pool: self-hosted-linux
         modules: '"linux"'
+  - name: targets
+    type: object
 
 stages:
   - template: stages/unity-build.yml
     parameters:
       platform: windows
+      targets: ${{ parameters.targets }}
       ${{ insert }}: ${{ parameters.os.windows }}
   - template: stages/publish.yml
