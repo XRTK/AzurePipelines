@@ -16,5 +16,6 @@ stages:
   - template: stages/unity-build.yml
     parameters:
       platform: windows
+      build-targets: ${{ variables['build-targets'] }}
       ${{ insert }}: ${{ parameters.os.windows }}
   - template: stages/publish.yml

@@ -43,7 +43,7 @@ stages:
 
       - template: steps/validate-project.yml
 
-      - ${{ each item in variables['build-targets'] }}:
+      - ${{ each item in parameters.build-targets }}:
         - template: steps/run-unity-tests.yml
           parameters:
             target: ${{ item }}
