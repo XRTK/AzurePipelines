@@ -48,8 +48,8 @@ stages:
           - ${{ if eq(target, validTarget) }}:
             - task: Cache@2
               inputs:
-                key: '"il2cpp_cache" | "$(Agent.OS)" | "${{ target }}" | **/il2cpp_*/**/*'
-                path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\'
+                key: '"il2cpp_cache" | "$(Agent.OS)" | "${{ target }}"'
+                path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_*'
               displayName: 'IL2CPP Cache ${{ target }}'
             - template: steps/run-unity-tests.yml
               parameters:
