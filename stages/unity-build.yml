@@ -41,17 +41,16 @@ stages:
         parameters:
           modules: ${{ parameters.modules }}
 
-      - task: Cache@2
-        inputs:
-          key: 'il2cpp_cache | "$(Agent.OS)" | "$(Build.Repository.Name)"'
-          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_cache'
-        displayName: 'IL2CPP Cache'
-
       - template: steps/validate-project.yml
 
       - ${{ each target in parameters.targets }}:
         - ${{ each validTarget in parameters.validTargets }}:
           - ${{ if eq(target, validTarget) }}:
+            - task: Cache@2
+              inputs:
+                key: '"il2cpp_cache" | "$(Agent.OS)" | "${{ target }}" | **/il2cpp_*/**/*'
+                path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\'
+              displayName: 'IL2CPP Cache ${{ target }}'
             - template: steps/run-unity-tests.yml
               parameters:
                 target: ${{ target }}
