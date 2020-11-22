@@ -44,7 +44,6 @@ stages:
       - task: Cache@2
         inputs:
           key: 'il2cpp_cache | "$(Agent.OS)" | "$(Build.Repository.Name)"'
-          restoreKeys: il2cpp_cache
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_cache'
         displayName: 'IL2CPP Cache'
 
