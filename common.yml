@@ -2,7 +2,7 @@ parameters:
   - name: targets
     type: object
     # Unity -buildTarget command line args https://docs.unity3d.com/Manual/CommandLineArguments.html
-    # Standalone, Win, Win64, OSXUniversal, Linux64, iOS, Android, WebGL, XboxOne, PS4, WindowsStoreApps, Switch, tvOS, Lumin
+    # StandaloneWindows64, WSAPlayer, StandaloneOSX, iOS, StandaloneLinux64, Android, Lumin, WebGL
   - name: os
     type: object
     default:
