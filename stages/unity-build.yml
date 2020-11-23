@@ -32,7 +32,7 @@ stages:
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
           $logDirectory = '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Logs'
 
-          if (TestPath -Path $logDirectory) {
+          if (Test-Path -Path $logDirectory) {
             Remove-Item -Path $logDirectory
           }
 
