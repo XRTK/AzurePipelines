@@ -36,12 +36,12 @@ parameters:
 stages:
   - template: stages/unity-build.yml
     parameters:
-      platform: windows
-      targets: ${{ parameters.targets }}
-      ${{ insert }}: ${{ parameters.os.windows }}
-  - template: stages/unity-build.yml
-    parameters:
       platform: macOS
       targets: ${{ parameters.targets }}
       ${{ insert }}: ${{ parameters.os.macOS }}
+  - template: stages/unity-build.yml
+    parameters:
+      platform: windows
+      targets: ${{ parameters.targets }}
+      ${{ insert }}: ${{ parameters.os.windows }}
   - template: stages/publish.yml
