@@ -30,7 +30,7 @@ stages:
           Write-Host "Package Version: $(package.version)"
           Write-Host "isReleaseBuild? $(isReleaseBuild)"
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
-          $logDirectory = '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Logs'
+          $logDirectory = '$(System.DefaultWorkingDirectory)\$(project.name)\Builds'
 
           if (Test-Path -Path $logDirectory) {
             Remove-Item $logDirectory -Force -Recurse
