@@ -38,7 +38,7 @@ steps:
         exit 1
       }
 
-      Write-Host "Editor root path currently set to: `"$editorRootPath`"""
+      Write-Host "Editor root path currently set to: `"$editorRootPath`""
       Write-Host ""
 
       Write-Host "Unity HUB CLI Options:"
