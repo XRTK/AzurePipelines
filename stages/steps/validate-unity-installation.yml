@@ -33,19 +33,19 @@ steps:
         exit 1
       }
 
-      if( -not (Test-Path -Path $editorRootPath -PathType Leaf) ) {
-        Write-Host "Default editor installation path doesn't exist, attempting to get the path from Unity Hub..."
-        Write-Host ""
-        $p = Start-Process -NoNewWindow -PassThru -Wait -FilePath "$hubPath" -ArgumentList @('--','--headless','ip','-g')
-        Write-Host ""
-        $editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
+      # if ( -not (Test-Path -Path $editorRootPath -PathType Leaf) ) {
+      #   Write-Host "Default editor installation path doesn't exist, attempting to get the path from Unity Hub..."
+      #   Write-Host ""
+      #   $p = Start-Process -NoNewWindow -PassThru -Wait -FilePath "$hubPath" -ArgumentList @('--','--headless','ip','-g')
+      #   Write-Host ""
+      #   $editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
 
-        if( [string]::IsNullOrWhiteSpace($editorRootPath) )
-        {
-          Write-Error "Failed to find the editor root installation path!"
-          exit 1
-        }
-      }
+      #   if( [string]::IsNullOrWhiteSpace($editorRootPath) )
+      #   {
+      #     Write-Error "Failed to find the editor root installation path!"
+      #     exit 1
+      #   }
+      # }
 
       Write-Host "Editor root path currently set to: `"$editorRootPath`""
       Write-Host ""
