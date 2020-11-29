@@ -30,7 +30,7 @@ steps:
         exit 1
       }
 
-      $editorRootPath = & "$hubPath" -- --headless ip -g -Wait | Out-String | foreach { $_ -replace "`r|`n","" }
+      $editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
 
       if( [string]::IsNullOrWhiteSpace($editorRootPath) )
       {
