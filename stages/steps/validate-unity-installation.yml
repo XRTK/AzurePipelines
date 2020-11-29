@@ -11,14 +11,17 @@ steps:
 
       if ( (-not $global:PSVersionTable.Platform) -or ($global:PSVersionTable.Platform -eq "Win32NT") ) {
         $hubPath = "C:\Program Files\Unity Hub\Unity Hub.exe"
+        $editorRootPath = "C:\Program Files\Unity\Hub\Editor\"
         $editorFileEx = "\Editor\Unity.exe"
       }
       elseif ( $global:PSVersionTable.OS.Contains("Darwin") ) {
         $hubPath = "/Applications/Unity Hub.app/Contents/MacOS/Unity Hub"
+        $editorRootPath = "/Applications/Unity/Hub/Editor/"
         $editorFileEx = "/Unity.app"
       }
       elseif ( $global:PSVersionTable.OS.Contains("Linux") ) {
         $hubPath = "./UnityHub.AppImage"
+        $editorRootPath = "~/Unity/Hub/Editor/"
         $editorFileEx = "/Unity"
       }
 
@@ -30,27 +33,14 @@ steps:
         exit 1
       }
 
-      $process = New-Object System.Diagnostics.Process
-      $process.StartInfo.UseShellExecute = $false
-      $process.StartInfo.RedirectStandardOutput = $true
-      $process.StartInfo.RedirectStandardError = $true
-      $process.StartInfo.FileName = $hubPath
-      $process.StartInfo.Arguments = @('--', '--headless', 'ip', '-g')
-      $out = $process.Start()
-      $process.WaitForExit()
+      if( -not (Test-Path -Path $editorRootPath) ) {
+        #$editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
 
-      $StandardError = $process.StandardError.ReadToEnd()
-      $StandardOutput = $process.StandardOutput.ReadToEnd()
-
-      Write-Host "Errors: $StandardError"
-      Write-Host "Output: $StandardOutput"
-
-      #$editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
-
-      if( [string]::IsNullOrWhiteSpace($editorRootPath) )
-      {
-        Write-Error "Failed to find the editor root installation path!"
-        exit 1
+        if( [string]::IsNullOrWhiteSpace($editorRootPath) )
+        {
+          Write-Error "Failed to find the editor root installation path!"
+          exit 1
+        }
       }
 
       Write-Host "Editor root path currently set to: `"$editorRootPath`""
