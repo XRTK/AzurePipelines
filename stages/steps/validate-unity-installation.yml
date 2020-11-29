@@ -34,7 +34,7 @@ steps:
       $process.StartInfo.UseShellExecute = $false
       $process.StartInfo.RedirectStandardOutput = $true
       $process.StartInfo.RedirectStandardError = $true
-      $process.StartInfo.FileName = $FileName
+      $process.StartInfo.FileName = $hubPath
       $process.StartInfo.Arguments = @('--', '--headless', 'ip', '-g')
       $out = $process.Start()
       $process.WaitForExit()
