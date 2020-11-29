@@ -34,6 +34,8 @@ steps:
       }
 
       if( -not (Test-Path -Path $editorRootPath -PathType Leaf) ) {
+        Write-Host "Default editor installation path doesn't exist, attempting to get the path from Unity Hub..."
+        Write-Host ""
         #$editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
 
         if( [string]::IsNullOrWhiteSpace($editorRootPath) )
