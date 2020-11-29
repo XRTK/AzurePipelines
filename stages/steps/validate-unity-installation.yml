@@ -30,7 +30,7 @@ steps:
         exit 1
       }
 
-      $editorRootPath = & `"$hubPath`" -- --headless ip -g
+      $editorRootPath = & `"$hubPath`" -- --headless ip -g | Out-String
       Write-Host "Editor root path: $editorRootPath"
       Write-Host ""
 
