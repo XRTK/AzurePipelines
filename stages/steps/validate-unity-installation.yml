@@ -11,17 +11,14 @@ steps:
 
       if ( (-not $global:PSVersionTable.Platform) -or ($global:PSVersionTable.Platform -eq "Win32NT") ) {
         $hubPath = "C:\Program Files\Unity Hub\Unity Hub.exe"
-        $editorRootPath = "C:\Program Files\Unity\Hub\Editor\"
         $editorFileEx = "\Editor\Unity.exe"
       }
       elseif ( $global:PSVersionTable.OS.Contains("Darwin") ) {
         $hubPath = "/Applications/Unity Hub.app/Contents/MacOS/Unity Hub"
-        $editorRootPath = "/Applications/Unity/Hub/Editor/"
         $editorFileEx = "/Unity.app"
       }
       elseif ( $global:PSVersionTable.OS.Contains("Linux") ) {
         $hubPath = "./UnityHub.AppImage"
-        $editorRootPath = "~/Unity/Hub/Editor/"
         $editorFileEx = "/Unity"
       }
 
@@ -32,6 +29,10 @@ steps:
         Write-Error "Failed to validate Unity Hub path at `"$hubPath`""
         exit 1
       }
+
+      $editorRootPath = & "$hubPath" -- --headless ip -g
+      Write-Host "Editor root path: $editorRootPath"
+      Write-Host ""
 
       Write-Host "Unity HUB CLI Options:"
       $p = Start-Process -NoNewWindow -PassThru -Wait -FilePath "$hubPath" -ArgumentList @('--','--headless','help')
