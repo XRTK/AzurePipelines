@@ -33,7 +33,7 @@ steps:
         exit 1
       }
 
-      if( -not (Test-Path -Path $editorRootPath) ) {
+      if( -not (Test-Path -Path $editorRootPath -PathType Leaf) ) {
         #$editorRootPath = . "$hubPath" -- --headless ip -g | Out-String | foreach { $_ -replace "`r|`n","" }
 
         if( [string]::IsNullOrWhiteSpace($editorRootPath) )
