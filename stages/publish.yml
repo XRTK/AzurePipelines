@@ -34,7 +34,7 @@ stages:
           git config user.name "XRTK-Build-Bot"
           git status
 
-          if( '$(isReleaseBuild)' -eq 'True' ) {
+          if ( '$(isReleaseBuild)' -eq 'True' ) {
             git fetch origin master
             git pull origin master
           }
@@ -48,7 +48,7 @@ stages:
           git subtree split --prefix="$(project.name)/Packages/$(package.name)" --branch upm
           git checkout upm
 
-          if( '$(isReleaseBuild)' -eq 'True' ) {
+          if ( '$(isReleaseBuild)' -eq 'True' ) {
             $upmSha = git rev-parse upm
             Write-Host "##vso[task.setvariable variable=project.upmSha]$($upmSha)"
             git tag $(package.version) upm
@@ -72,7 +72,7 @@ stages:
         displayName: 'Download Pipeline Artifact'
         condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'True') )
         inputs:
-          artifact: ${{ format('{0}.{1}', '$(Build.BuildNumber)', '$(Build.BuildId)') }}
+          artifact: ${{ format('{0}.{1}.{2}', '$(Build.BuildNumber)', '$(Build.BuildId)', '$(System.JobAttempt)') }}
 
       - task: GitHubRelease@1
         displayName: 'GitHub release (create)'
