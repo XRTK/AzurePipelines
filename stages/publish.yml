@@ -64,6 +64,7 @@ stages:
         displayName: 'upm publish'
         inputs:
           command: publish
+          workingDir: $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name)
           verbose: false
           publishEndpoint: 'XRTK UPM Server'
 
