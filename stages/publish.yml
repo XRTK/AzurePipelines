@@ -67,6 +67,15 @@ stages:
           workingDir: $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name)
           verbose: false
           publishEndpoint: 'XRTK UPM Server'
+        condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'True') )
+
+      - task: Npm@1
+        displayName: 'upm publish'
+        inputs:
+          command: publish
+          verbose: false
+          publishEndpoint: 'XRTK UPM Server'
+        condition:  and(succeeded(), eq(variables['isPreviewBuild'], 'True') )
 
       - task: DownloadPipelineArtifact@2
         displayName: 'Download Pipeline Artifact'
