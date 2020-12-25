@@ -138,7 +138,7 @@ stages:
           messageType: embeds
           embeds: |
             [{
-                "title": "(package.name) has a new release!",
+                "title": "$(package.name) has a new release!",
                 "description": "Release $(package.version) is now available.",
                 "author": {
                     "name": "$(Discord.WebhookAuthor)"
