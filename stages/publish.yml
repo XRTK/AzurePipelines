@@ -98,10 +98,9 @@ stages:
 
             ## Requirements
 
-            - [Unity $(UnityVersion)](https://unity3d.com/unity/whats-new/$(UnityVersion)) or later
-            - Microsoft Visual Studio $(VisualStudioVersion)
-            - Windows 10 $(WindowsBuildVersion) or later
-            - Windows SDK $(WindowsSdkVersion) or later
+            - [Unity 2019.4 LTS](https://unity3d.com/unity/qa/lts-releases) or later
+            - Microsoft Visual Studio 2019
+            - Windows 10 or later
 
             ## Import via Unity Package Manager (upm)
 
