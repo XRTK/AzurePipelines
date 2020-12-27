@@ -4,11 +4,8 @@ steps:
       Copy-Item "$(System.DefaultWorkingDirectory)\README.md" -Destination $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name) -force -Verbose
       Copy-Item "$(System.DefaultWorkingDirectory)\LICENSE.md" -Destination $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name) -force -Verbose
 
-      $buildDocfx = Test-Path '$(System.DefaultWorkingDirectory)\docfx_project\docfx.json'
-
-      if( $buildDocfx ) {
-        choco install docfx
-
+      if ( Test-Path '$(System.DefaultWorkingDirectory)\docfx_project\docfx.json' ) {
+        choco upgrade docfx
         docfx $(System.DefaultWorkingDirectory)\docfx_project\docfx.json
       }
 
@@ -23,9 +20,9 @@ steps:
       git status
       git commit -m "docs $(package.version)@$(Build.SourceVersion)"
       git checkout -b docs
-      git fetch origin master
-      git checkout master
+      git fetch origin $(System.PullRequest.TargetBranch)
+      git checkout $(System.PullRequest.TargetBranch)
       git merge docs
       git branch -D docs
-      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git master
+      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git $(System.PullRequest.TargetBranch)
     displayName: 'Build Docs'

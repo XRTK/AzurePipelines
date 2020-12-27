@@ -19,26 +19,26 @@ steps:
       # Strip SemVer since version type is not compatible. We do a hard replace on the preview tag anyway.
       $version = [version] ($packageInfo.version -replace "-preview.\d*", "")
 
-      if( [string]::IsNullOrEmpty($oldVersionString) ) {
+      if ([string]::IsNullOrEmpty($oldVersionString)) {
         $oldVersionString = $packageInfo.version
       }
 
       $oldVersion = [version] ($oldVersionString -replace "-preview.\d*", "")
 
-      if( '$(isPreviewBuild)' -eq 'True' ) {
+      if ( '$(isPreviewBuild)' -eq 'True' ) {
         Write-Host "Update Preview Build Version"
         # if preview only bump build number if less than
 
-        if( $version -lt $oldVersion ) {
+        if ( $version -lt $oldVersion ) {
           $version = [version]::new($oldVersion.Major, $oldVersion.Minor, $oldVersion.Build + 1)
         }
       }
       else {
-        if( '$(isReleaseBuild)' -eq 'True' ) {
+        if ( '$(isReleaseBuild)' -eq 'True' ) {
           Write-Host "Update Release Build Version"
           # if release build, then always bump build number if less than or equal
 
-          if( $version -le $oldVersion ) {
+          if ( $version -le $oldVersion ) {
             $version = [version]::new($oldVersion.Major, $oldVersion.Minor, $oldVersion.Build + 1)
           }
         }
