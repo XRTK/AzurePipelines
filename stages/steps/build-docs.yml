@@ -15,7 +15,7 @@ steps:
       git status
       git add ./docs
 
-      if ( $(isReleaseBuild) -eq 'True' ) {
+      if ( '$(isReleaseBuild)' -eq 'True' ) {
         git add $(project.name)/Packages/$(package.name)/package.json"
       }
 
