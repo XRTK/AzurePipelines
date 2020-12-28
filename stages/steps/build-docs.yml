@@ -16,11 +16,11 @@ steps:
       git add ./docs
 
       if ( '$(isReleaseBuild)' -eq 'True' ) {
-        git add $(project.name)/Packages/$(package.name)/package.json"
+        git add "$(project.name)/Packages/$(package.name)/package.json"
       }
 
-      git add $(project.name)/Packages/$(package.name)/README.md"
-      git add $(project.name)/Packages/$(package.name)/LICENSE.md"
+      git add "$(project.name)/Packages/$(package.name)/README.md"
+      git add "$(project.name)/Packages/$(package.name)/LICENSE.md"
       git status
       git commit -m "docs $(package.version)@$(Build.SourceVersion)"
       git checkout -b docs
