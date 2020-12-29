@@ -15,7 +15,7 @@ steps:
       git status
       git add ./docs
 
-      if ( '$(isReleaseBuild)' -eq 'True' ) {
+      if ( '$(isPreviewBuild)' -eq 'True' ) {
         git add "$(project.name)/Packages/$(package.name)/package.json"
       }
 
@@ -30,3 +30,4 @@ steps:
       git branch -D docs
       git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git $(System.PullRequest.SourceBranch)
     displayName: 'Build Docs'
+    condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'False'), eq(variables['build.reason'], 'PullRequest') )
