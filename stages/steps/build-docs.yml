@@ -24,9 +24,9 @@ steps:
       git status
       git commit -m "docs $(package.version)@$(Build.SourceVersion)"
       git checkout -b docs
-      git fetch origin $(Build.SourceBranchName)
-      git checkout $(Build.SourceBranchName)
+      git fetch origin $(System.PullRequest.SourceBranch)
+      git checkout $(System.PullRequest.SourceBranch)
       git merge docs
       git branch -D docs
-      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git $(Build.SourceBranchName)
+      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git $(System.PullRequest.SourceBranch)
     displayName: 'Build Docs'
