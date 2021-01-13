@@ -60,7 +60,7 @@ stages:
               parameters:
                 target: ${{ target }}
 
-      - ${{ if eq(parameters.platform, 'windows') }}:
+      - ${{ if and( or( eq(variables['isReleaseBuild'], 'True'), eq(variables['isPreviewBuild'], 'True') ), eq(parameters.platform, 'windows') }}:
         - template: steps/build-docs.yml
         - ${{ if and( eq(variables['isReleaseBuild'], 'True'), eq(variables['package.name'], 'com.xrtk.core') ) }}:
           - template: steps/export-package-seed.yml
