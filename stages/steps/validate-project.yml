@@ -22,7 +22,27 @@ steps:
       }
 
       # Wait for the last of the log information to be written
-      Start-Sleep -Seconds 10
+      $fileLocked = $true
+
+      while ( $fileLocked )
+      {
+        try
+        {
+          $file = Convert-Path $logPath
+          $fileStream = [System.IO.File]::Open($file,'Open','Write')
+          $fileStream.Close()
+          $fileStream.Dispose()
+          $fileLocked = $false
+        }
+        catch
+        {
+          $fileLocked = $true
+          Start-Sleep -Seconds 1
+          Receive-Job $ljob
+        }
+      }
+
+      # Clean up job
       Receive-Job $ljob
       Stop-Job $ljob
       Remove-Job $ljob
