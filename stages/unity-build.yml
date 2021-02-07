@@ -55,13 +55,6 @@ stages:
         displayName: 'Library Cache'
         condition: always() #TODO we should skip this if we're doing a clean build
 
-      - task: Cache@2
-        inputs:
-          key: 'build cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
-          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Builds'
-        displayName: 'Build Cache'
-        condition: always() #TODO we should skip this if we're doing a clean build
-
       - template: steps/validate-project.yml
 
       - ${{ each target in parameters.targets }}:
