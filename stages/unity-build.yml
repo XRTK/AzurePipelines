@@ -48,6 +48,24 @@ stages:
         parameters:
           modules: ${{ parameters.modules }}
 
+      - task: Cache@2
+        inputs:
+          key: 'package cache | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\PackageCache'
+        displayName: 'Package Cache'
+
+      - task: Cache@2
+        inputs:
+          key: 'unity artifacts | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\Artifacts'
+        displayName: 'Artifacts Cache'
+
+      - task: Cache@2
+        inputs:
+          key: 'shader cache | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\ShaderCache'
+        displayName: 'Shader Cache'
+
       - template: steps/validate-project.yml
 
       - ${{ each target in parameters.targets }}:
@@ -58,7 +76,7 @@ stages:
                 target: ${{ target }}
             - task: Cache@2
               inputs:
-                key: 'il2cpp | "$(Agent.OS)" | ${{ target }} | "$(Build.BuildNumber).$(Build.BuildId)"'
+                key: 'il2cpp | "$(Agent.OS)" | ${{ target }} | "$(Build.BuildNumber)"'
                 path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_cache\${{ target }}'
               displayName: ${{ target }} IL2CPP Cache
             - template: steps/build-unity-player.yml
