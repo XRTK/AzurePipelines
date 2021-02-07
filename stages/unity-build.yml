@@ -50,19 +50,19 @@ stages:
 
       - task: Cache@2
         inputs:
-          key: 'package cache | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          key: 'package cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\PackageCache'
         displayName: 'Package Cache'
 
       - task: Cache@2
         inputs:
-          key: 'unity artifacts | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          key: 'unity artifacts | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\Artifacts'
         displayName: 'Artifacts Cache'
 
       - task: Cache@2
         inputs:
-          key: 'shader cache | "$(Agent.OS)" | "$(Build.BuildNumber)"'
+          key: 'shader cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\ShaderCache'
         displayName: 'Shader Cache'
 
@@ -76,7 +76,7 @@ stages:
                 target: ${{ target }}
             - task: Cache@2
               inputs:
-                key: 'il2cpp | "$(Agent.OS)" | ${{ target }} | "$(Build.BuildNumber)"'
+                key: 'il2cpp | "$(Agent.OS)" | ${{ target }} | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
                 path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_cache\${{ target }}'
               displayName: ${{ target }} IL2CPP Cache
             - template: steps/build-unity-player.yml
