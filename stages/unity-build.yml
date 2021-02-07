@@ -58,7 +58,7 @@ stages:
                 target: ${{ target }}
             - task: Cache@2
               inputs:
-                key: 'il2cpp | "$(Agent.OS)" | ${{ target }}'
+                key: 'il2cpp | "$(Agent.OS)" | ${{ target }} | ${{ '$(Build.BuildNumber)' }}.${{ '$(Build.BuildId)' }}'
                 path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library\il2cpp_cache\${{ target }}'
               displayName: ${{ target }} IL2CPP Cache
             - template: steps/build-unity-player.yml
