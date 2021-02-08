@@ -2,7 +2,7 @@ steps:
   - powershell: |
       Write-Host "Validating Project..."
       $logPath = "$(LogDirectory)\ValidateProject.log"
-      $process = Start-Process -FilePath "$(EditorPath)" -ArgumentList "-quit -batchmode -projectPath `"$(System.DefaultWorkingDirectory)\$(project.name)`" -executeMethod XRTK.Editor.BuildAndDeploy.UnityPlayerBuildTools.ValidateProject -logfile `"$logPath`"" -PassThru
+      $process = Start-Process -FilePath "$(EditorPath)" -ArgumentList "-quit -batchmode -projectPath `"$(System.DefaultWorkingDirectory)\$(project.name)`" -executeMethod XRTK.Editor.BuildPipeline.UnityPlayerBuildTools.ValidateProject -logfile `"$logPath`"" -PassThru
 
       $ljob = Start-Job -ScriptBlock {
         param($log)
