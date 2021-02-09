@@ -53,7 +53,7 @@ stages:
           key: 'library cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
         displayName: 'Library Cache'
-        condition: always() #TODO we should skip this if we're doing a clean build
+        condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'False') )
 
       - template: steps/validate-project.yml
 
