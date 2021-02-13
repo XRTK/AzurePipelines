@@ -60,6 +60,6 @@ steps:
 
       Write-Host "##vso[task.setvariable variable=package.version]$($packageInfo.version)"
       $packageInfo | ConvertTo-Json | Set-Content $packageJsonFile
-      # NOTE: packageInfo is only committed back to the master branch in build-docs.yaml when doing a release build
+      # NOTE: packageInfo is only committed back to the main branch in build-docs.yaml when doing a release build
     failOnStderr: true
     displayName: 'Sync Package Info'
