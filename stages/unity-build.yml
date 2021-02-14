@@ -49,12 +49,12 @@ stages:
           modules: ${{ parameters.modules }}
 
       #- ${{ if eq(variables['isReleaseBuild'], 'False') }}:
-        - task: Cache@2
-          inputs:
-            key: 'library cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
-            path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
-          displayName: 'Library Cache'
-          condition: succeeded()
+      - task: Cache@2
+        inputs:
+          key: 'library cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
+          path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
+        displayName: 'Library Cache'
+        condition: succeeded()
 
       - template: steps/validate-project.yml
 
