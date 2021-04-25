@@ -51,7 +51,7 @@ stages:
       - ${{ if eq(variables['isReleaseBuild'], 'False') }}:
         - task: Cache@2
           inputs:
-            key: 'library cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
+            key: 'library cache | "$(Agent.OS)" | "$(project.name) $(System.PullRequest.PullRequestNumber)"'
             path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
           displayName: 'Library Cache'
           condition: succeeded()
@@ -68,10 +68,8 @@ stages:
               parameters:
                 target: ${{ target }}
 
-      - ${{ if and( or( eq(variables['isReleaseBuild'], 'True'), eq(variables['isPreviewBuild'], 'True') ), eq(parameters.platform, 'windows') ) }}:
-        - template: steps/build-docs.yml
-        - ${{ if and( eq(variables['isReleaseBuild'], 'True'), eq(variables['package.name'], 'com.xrtk.core') ) }}:
-          - template: steps/export-package-seed.yml
+      - ${{ if and( eq(variables['isReleaseBuild'], 'True'), eq(variables['package.name'], 'com.xrtk.core') ) }}:
+        - template: steps/export-package-seed.yml
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Pipeline Artifacts'

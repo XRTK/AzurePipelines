@@ -1,6 +1,6 @@
 stages:
 - stage:
-  displayName: 'Publish'
+  displayName: 'Publish UPM'
   condition: and(succeeded(), or( eq(variables['isReleaseBuild'], 'True'), eq(variables['isPreviewBuild'], 'True') ) )
   pool:
     name: 'Azure Pipelines'
@@ -104,34 +104,21 @@ stages:
 
             ## Import via Unity Package Manager (upm)
 
-            Find `Packages/manifest.json` in your project and edit the dependencies to include:
+            In your project, open Preferences/Package Manger and add the XRTK to the list of scoped registries:
 
-            ```json
-            {
-              "scopedRegistries": [
-                {
-                  "name": "XRTK",
-                  "url": "http://upm.xrtk.io:4873/",
-                  "scopes": [
-                    "com.xrtk"
-                  ]
-                }
-              ],
-              "dependencies": {
-                "$(package.name)": "$(package.version)",
-                ...
-              },
-            }
+            ```
+            Name: XRTK
+            URL: http://upm.xrtk.io:4873
+            Scope(s): com.xrtk
             ```
 
-            Once the registry has been added, you can search for each platform in the UPM Package Manager window.
-
+            Once the registry has been added, you can search for each platform in the UPM Package Manager window
             > Note: For pre-releases you'll need to enable `show preview packages` under the Advanced dropdown in Unity's Package Manager.
 
             ## Importing the asset directly into your project
 
-            1. Download the release asset unity package
-            2. Import unity package directly into your project by dragging and dropping the file into your project window
+            1. Download the release asset unity package from https://github.com/XRTK/XRTK-Core/releases
+            2. Import the XRTK-Seed unity package directly into your project by dragging and dropping the file into your project
           assets: '$(Pipeline.Workspace)/**/*.unitypackage'
           isPreRelease: true
 
