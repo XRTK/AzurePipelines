@@ -50,10 +50,10 @@ stages:
 
       - task: Cache@2
         inputs:
-          key: 'library cache | "$(Agent.OS)" | "$(package.name) $(System.PullRequest.PullRequestNumber)"'
+          key: 'library cache | "$(Agent.OS)" | "$(project.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
         displayName: 'Library Cache'
-        condition: and(succeeded(), eq(variables['isReleaseBuild'], 'False'))
+        condition: succeeded()
 
       - template: steps/validate-project.yml
 
