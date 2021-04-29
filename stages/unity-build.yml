@@ -18,8 +18,7 @@ stages:
       - checkout: self
         submodules: recursive
 
-      - ${{ if ne(variables['package.name'], 'NULL') }}:
-        - template: steps/upm-package-info.yml
+      - template: steps/upm-package-info.yml
 
       - powershell: |
           $buildNumber = '$(Build.BuildNumber)'
