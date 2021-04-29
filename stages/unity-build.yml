@@ -28,6 +28,7 @@ stages:
           Write-Host "Build Repo Name: $(Build.Repository.Name)"
           Write-Host "Build Number: $buildNumber"
           Write-Host "Build Revision Number: $revision"
+          Write-Host "Package Name: $(package.name)"
           Write-Host "Package Version: $(package.version)"
           Write-Host "isReleaseBuild? $(isReleaseBuild)"
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
@@ -54,7 +55,7 @@ stages:
           key: 'library cache | "$(Agent.OS)" | "$(project.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
         displayName: 'Library Cache'
-        condition: succeeded()
+        condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
 
       - template: steps/validate-project.yml
 
