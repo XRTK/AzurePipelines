@@ -20,6 +20,7 @@ stages:
       - powershell: |
           $buildNumber = '$(Build.BuildNumber)'
           Write-Host "Build Number: $buildNumber"
+          Write-Host "Package Name: $(package.name)"
           Write-Host "Package Version: $(package.version)"
           Write-Host "isReleaseBuild? $(isReleaseBuild)"
           Write-Host "isPreviewBuild? $(isPreviewBuild)"
