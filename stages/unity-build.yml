@@ -18,7 +18,7 @@ stages:
       - checkout: self
         submodules: recursive
 
-      - ${{ if variables.package.name }}:
+      - ${{ if variables.isPackage }}:
         - template: steps/upm-package-info.yml
 
       - powershell: |

@@ -49,5 +49,5 @@ stages:
   #     platform: linux
   #     targets: ${{ parameters.targets }}
   #     ${{ insert }}: ${{ parameters.os.linux }}
-  - ${{ if variables.package.name }}:
+  - ${{ if variables.isPackage }}:
     - template: stages/publish-upm.yml
