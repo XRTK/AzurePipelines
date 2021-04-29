@@ -1,7 +1,7 @@
 stages:
 - stage:
   displayName: 'Publish UPM'
-  condition: and(succeeded(), or( eq(variables['isReleaseBuild'], 'True'), eq(variables['isPreviewBuild'], 'True') ) )
+  condition: and(succeeded(), ne(variables['package.name'], ''), or( eq(variables['isReleaseBuild'], 'True'), eq(variables['isPreviewBuild'], 'True') ) )
   pool:
     name: 'Azure Pipelines'
     vmImage: 'windows-latest'
