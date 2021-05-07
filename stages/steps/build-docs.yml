@@ -1,9 +1,6 @@
 steps:
   - powershell: |
-      Write-Host Updating project docs...
-      Copy-Item "$(System.DefaultWorkingDirectory)\README.md" -Destination $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name) -force -Verbose
-      Copy-Item "$(System.DefaultWorkingDirectory)\LICENSE.md" -Destination $(System.DefaultWorkingDirectory)\$(project.name)\Packages\$(package.name) -force -Verbose
-
+      Write-Host Generating project docs...
       if ( Test-Path '$(System.DefaultWorkingDirectory)\docfx_project\docfx.json' ) {
         choco upgrade docfx
         docfx $(System.DefaultWorkingDirectory)\docfx_project\docfx.json
@@ -13,21 +10,10 @@ steps:
       git config user.email "XRTK-Build-Bot@users.noreply.github.com"
       git config user.name "XRTK-Build-Bot"
       git status
+      git checkout -b docs
       git add ./docs
-
-      if ( '$(isPreviewBuild)' -eq 'True' ) {
-        git add "$(project.name)/Packages/$(package.name)/package.json"
-      }
-
-      git add "$(project.name)/Packages/$(package.name)/README.md"
-      git add "$(project.name)/Packages/$(package.name)/LICENSE.md"
       git status
       git commit -m "docs $(package.version)@$(Build.SourceVersion)"
-      git checkout -b docs
-      git fetch origin $(System.PullRequest.SourceBranch)
-      git checkout $(System.PullRequest.SourceBranch)
-      git merge docs
-      git branch -D docs
-      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git $(System.PullRequest.SourceBranch)
+      git push https://XRTK-Build-Bot:$(GitHubPat)@github.com/$(Build.Repository.Name).git docs
     displayName: 'Build Docs'
-    condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'False'), eq(variables['build.reason'], 'PullRequest') )
+    condition:  and(succeeded(), eq(variables['build.reason'], 'PullRequest'), eq(variables['isReleaseBuild'], 'False'), eq(variables['isPreviewBuild'], 'False'))
