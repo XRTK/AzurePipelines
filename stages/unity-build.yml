@@ -54,6 +54,7 @@ stages:
           key: 'library cache | "$(Agent.OS)" | "$(project.name) $(System.PullRequest.PullRequestNumber)"'
           path: '$(System.DefaultWorkingDirectory)\$(project.name)\Library'
         displayName: 'Library Cache'
+        continueOnError: true
         condition: and(succeeded(), eq(variables['build.reason'], 'PullRequest'))
 
       - template: steps/validate-project.yml
