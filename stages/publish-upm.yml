@@ -125,7 +125,7 @@ stages:
             - Microsoft Visual Studio 2019
             - Windows 10 or later
 
-          assets: '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Packages\*.unitypackage'
+          assets: '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Packages\*'
           isPreRelease: true
 
       - task: robmburke.ado-discord-webhook.custom-build-release-task.ado-discord-webhook@1
