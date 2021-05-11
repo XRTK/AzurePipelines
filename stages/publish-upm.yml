@@ -81,6 +81,8 @@ stages:
       - task: DownloadPipelineArtifact@2
         displayName: 'Download Pipeline Artifact'
         condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'True') )
+        patterns: '**/*.unitypackage'
+        path: $(System.DefaultWorkingDirectory)\$(project.name)\Builds\Packages
         inputs:
           artifact: ${{ format('{0}.{1}.{2}', '$(Build.BuildNumber)', '$(Build.BuildId)', '$(System.JobAttempt)') }}
 
@@ -97,13 +99,7 @@ stages:
           releaseNotesInline: |
             # Release Notes
 
-            ## Requirements
-
-            - [Unity 2019.4 LTS](https://unity3d.com/unity/qa/lts-releases) or later
-            - Microsoft Visual Studio 2019
-            - Windows 10 or later
-
-            ## Import via Unity Package Manager (upm)
+            ### Import via Unity Package Manager (upm)
 
             In your project, open Preferences/Package Manger and add the XRTK to the list of scoped registries:
 
@@ -116,11 +112,18 @@ stages:
             Once the registry has been added, you can search for each platform in the UPM Package Manager window
             > Note: For pre-releases you'll need to enable `show preview packages` under the Advanced dropdown in Unity's Package Manager.
 
-            ## Importing the asset directly into your project
+            ### Importing the asset directly into your project
 
             1. Download the release asset unity package from https://github.com/XRTK/XRTK-Core/releases
             2. Import the XRTK-Seed unity package directly into your project by dragging and dropping the file into your project
-          assets: '$(Pipeline.Workspace)/**/*.unitypackage'
+
+            ### Requirements
+
+            - [Unity 2019.4 LTS](https://unity3d.com/unity/qa/lts-releases) or later
+            - Microsoft Visual Studio 2019
+            - Windows 10 or later
+
+          assets: '$(System.DefaultWorkingDirectory)\$(project.name)\Builds\Packages\*.unitypackage'
           isPreRelease: true
 
       - task: robmburke.ado-discord-webhook.custom-build-release-task.ado-discord-webhook@1

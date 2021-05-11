@@ -69,8 +69,8 @@ stages:
               parameters:
                 target: ${{ target }}
 
-      - ${{ if and( eq(variables['isReleaseBuild'], 'True'), eq(variables['package.name'], 'com.xrtk.core') ) }}:
-        - template: steps/export-package-seed.yml
+      #- ${{ if and( eq(variables['isReleaseBuild'], 'True'), eq(variables['package.name'], 'com.xrtk.core') ) }}:
+      - template: steps/export-package-seed.yml
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Pipeline Artifacts'
