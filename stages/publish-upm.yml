@@ -81,7 +81,8 @@ stages:
       - task: DownloadPipelineArtifact@2
         displayName: 'Download Pipeline Artifact'
         condition:  and(succeeded(), eq(variables['isReleaseBuild'], 'True') )
-        patterns: '**/*.unitypackage'
+        patterns: |
+          **/*.unitypackage
         path: $(System.DefaultWorkingDirectory)\$(project.name)\Builds\Packages
         inputs:
           artifact: ${{ format('{0}.{1}.{2}', '$(Build.BuildNumber)', '$(Build.BuildId)', '$(System.JobAttempt)') }}
